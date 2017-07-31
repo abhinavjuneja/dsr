@@ -10,14 +10,25 @@ This is a starting point to demonstrate the method of authentication by verifyin
 
 ## Routes:
 GET /api/login
+
 POST /api/createUser
+
 GET /api/users
+
 GET /api/check
+
 GET /api/projects 
+
 POST /api/project
+
 GET /api/projects/:projectId
+
 DELETE /api/projects/:projectId
+
 PUT /api/projects/:projectId/scripts
+
 DELETE /api/projects/:projectId/scripts
+
 PUT /api/projects/:code/associatedTestCases
+
 DELETE /api/projects/:code/associatedTestCases
