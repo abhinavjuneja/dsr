@@ -1,6 +1,6 @@
 module.exports = {
 
-	'secret': 'ilovescotchyscotch',
+	'secret': 'yourDaddy',
 	'database': 'mongodb://localhost:27017/DSR'
 
 };
