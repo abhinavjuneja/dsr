@@ -8,7 +8,7 @@ This is a starting point to demonstrate the method of authentication by verifyin
 
 - node and npm
 
-##Routes:
+## Routes:
 ###GET /api/login
 ###POST /api/createUser
 ###GET /api/users

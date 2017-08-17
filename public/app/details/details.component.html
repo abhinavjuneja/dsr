@@ -1,0 +1,72 @@
+    <div  *ngIf="!loading && detailForm"  style="margin-top:50px">
+        <div style="margin-top:50px">
+        <md-card class="tableHeader" style="margin-bottom:0px;border-radius:0px;height:7px">
+            <md-card-content>
+                <div class="header" fxFlex="15.74%" >Name</div>
+                <div class="header" fxFlex="5%" >Coverage</div>
+                <div class="header" fxFlex="15.74%" >Complexity</div>
+                <div class="header" fxFlex="15.74%" >Comment</div>
+                <div class="header" fxFlex="6%" >Design</div>
+                <div class="header" fxFlex="6%" >Chrome</div>
+                <div class="header" fxFlex="6%" >FF</div>
+                <div class="header" fxFlex="6%" >IE</div>
+                <div class="header" fxFlex="10%" >Delete Requested</div>
+                <div class="header" fxFlex="10%" >Delete Comment</div>
+            </md-card-content>
+        </md-card>
+        <!--{{detailForm.value|json}}-->
+        <div  >
+            <md-card class="tableData" *ngFor="let project of scriptsData |slice:start:end; let i=index; " style="margin-top:0px;border-radius:0px;margin-bottom:0px;height:24px;box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48);">
+                <md-card-content>
+                    <!--<div fxFlex>{{project.name}}</div>
+                    <div fxFlex>{{project.numberOfTestCasesCovered}}</div>
+                    <div fxFlex>{{project.complexity}}</div>
+                    <div fxFlex>{{project.comment}}</div>
+                    <div fxFlex>{{project.deleteComment}}</div>-->
+                    
+                    <md-input-container fxFlex="15.74%" class="tableComponent">
+                        <input [mdTooltip]="detailForm.controls.scripts.value[i + start].name" mdInput [(ngModel)]="detailForm.controls.scripts.value[i + start].name" type="text">
+                    </md-input-container >
+                    <md-input-container class="tableComponent" fxFlex="5%">
+                        <input mdTooltip="Cases Covered" mdInput [(ngModel)]="detailForm.controls.scripts.value[i + start].numberOfTestCasesCovered" type="text">
+                    </md-input-container >
+                    <md-input-container fxFlex="15.74%" class="tableComponent">
+                        <input mdTooltip="Complexity" mdInput [(ngModel)]="detailForm.controls.scripts.value[i + start].complexity" type="text">
+                    </md-input-container >
+                    <md-input-container fxFlex="15.74%" class="tableComponent">
+                        <input [mdTooltip]="detailForm.controls.scripts.value[i + start].comment" mdInput [(ngModel)]="detailForm.controls.scripts.value[i + start].comment" type="text">
+                    </md-input-container>
+                    
+                    <!--<md-checkbox fxFlex [disabled]="true" [(ngModel)]="project.design"></md-checkbox>
+                    <md-checkbox fxFlex [disabled]="true" [(ngModel)]="project.executionChrome"></md-checkbox>
+                    <md-checkbox fxFlex [disabled]="true" [(ngModel)]="project.executionFF"></md-checkbox>
+                    <md-checkbox fxFlex [disabled]="true" [(ngModel)]="project.executionIE"></md-checkbox>
+                    <md-checkbox fxFlex [disabled]="true" [(ngModel)]="project.deleteRequest"></md-checkbox>-->
+                    <md-checkbox class="tableComponent" fxFlex="6%" mdTooltip="Design" [(ngModel)]="detailForm.controls.scripts.value[i + start].design" ></md-checkbox>
+                    <md-checkbox class="tableComponent" fxFlex="6%" mdTooltip="Execution Chrome" [(ngModel)]="detailForm.controls.scripts.value[i + start].executionChrome" ></md-checkbox>
+                    <md-checkbox class="tableComponent" fxFlex="6%" mdTooltip="Execution FF" [(ngModel)]="detailForm.controls.scripts.value[i + start].executionFF" ></md-checkbox>
+                    <md-checkbox class="tableComponent" fxFlex="6%" mdTooltip="Execution IE" [(ngModel)]="detailForm.controls.scripts.value[i + start].executionIE" ></md-checkbox>
+                    <md-checkbox class="tableComponent" fxFlex="10%" mdTooltip="Delete Requested" [(ngModel)]="detailForm.controls.scripts.value[i + start].deleteRequest" ></md-checkbox>
+                    <md-input-container fxFlex="10%" class="tableComponent">
+                            <input [disabled]="!detailForm.controls.scripts.value[i + start].deleteRequest" [mdTooltip]="detailForm.controls.scripts.value[i + start].deleteComment" mdInput [(ngModel)]="detailForm.controls.scripts.value[i + start].deleteComment" type="text">
+                    </md-input-container>
+                    <div>
+                        <button (click)="delScript(detailForm.controls.scripts.value[i + start].name)" md-button>Submit</button>
+                    </div>
+                </md-card-content>
+                
+            </md-card>
+        </div>
+         <md-card style="margin-top:0px;border-radius:0px;box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48);">
+            <md-paginator [length]="pageEvent1.length"
+                        [pageSize]="pageEvent1.pageSize"
+                        [pageSizeOptions]="[5, 10, 25, 100]"
+                         (page)="pageEvent = $event;onPageEvent($event);console.log($event)">
+            </md-paginator>
+         </md-card>  
+         <div>
+             <button (click)="sendData()" md-button>Submit</button>
+         </div>  
+    </div>
+    
+</div>

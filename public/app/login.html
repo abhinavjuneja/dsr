@@ -1,0 +1,30 @@
+<div >
+    <md-card class="login-card">
+        <md-card-header>
+            <!--<md-card-title>
+                Login
+            </md-card-title>-->
+        </md-card-header>
+        <md-card-content>
+            <div>
+                <md-input-container class="login-components">
+                    <input mdInput placeholder="Username"  [(ngModel)]="username">
+                </md-input-container>
+            </div>
+            <div>
+                <md-input-container class="login-components">
+                    <input type="password" mdInput placeholder="Password" [(ngModel)]="password" >
+                </md-input-container>
+            </div>
+        </md-card-content>   
+        <md-card-actions>
+
+            <button class="login-components" (click)="login(username,password)" md-button color="primary" md-raised-button>
+                <div *ngIf="!loading">Login</div>
+                <div style *ngIf="loading">
+                    <md-spinner style="height:34px" color="accent"></md-spinner>
+                </div>
+            </button>
+        </md-card-actions>
+    </md-card>
+</div>

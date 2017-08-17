@@ -12,12 +12,11 @@ module.exports = mongoose.model('Project', new Schema({
         executionIE:{type : Boolean, default:false},
         numberOfTestCasesCovered: Number,
         comment: String,
-        createdBy: { type : Schema.Types.ObjectId, ref : 'users' },
+        createdBy: String,
         createdDate: {type:Date,default:Date.now},
         deleteRequest:{type : Boolean, default:false},
         deleteComment:String,
         complexity:{type : String, enum:['easy','medium','complex']}
     }],
     associatedTestCases: [String]
-
 }));

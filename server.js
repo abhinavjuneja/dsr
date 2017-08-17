@@ -6,6 +6,7 @@ var app         = express();
 var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var mongoose    = require('mongoose');
+var path        = require('path');
 
 var config = require('./config'); // get our config file
 var User   = require('./app/models/user'); // get our mongoose model
@@ -23,6 +24,8 @@ app.use(bodyParser.json());
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, '/public')));
+// app.use(express.static(path.join(__dirname, '/node_modules')));
 
 // =================================================================
 // routes ==========================================================
@@ -30,23 +33,23 @@ app.use(morgan('dev'));
 
  app.get('/setup', function(req, res) {
 
-        // create a sample user
-        var nick = new User({ 
+        // create an admin user
+        var name = new User({ 
             name: 'mustache', 
             password: 'password',
             profile: 'admin' 
         });
-        nick.save(function(err) {
+        name.save(function(err) {
             if (err) throw err;
 
             console.log('User saved successfully');
             res.json({ success: true });
         });
-    });
-// basic route (http://localhost:8080)
-app.get('/', function(req, res) {
-	res.send('Hello! The API is at http://localhost:' + port + '/api');
-});
+    }); 
+// // basic route (http://localhost:8080)
+// app.get('/', function(req, res) {
+// 	res.send('Hello! The API is at http://localhost:' + port + '/api');
+// });
 
 // ---------------------------------------------------------
 // get an instance of the router for api routes

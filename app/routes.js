@@ -41,12 +41,12 @@ module.exports = function(apiRoutes) {
                     var token = jwt.sign(user, 'ilovescotchyscotch', {
                         expiresIn: 86400 // expires in 24 hours
                     });
-
+					console.log(req.userProfile)
                     res.json({
                         success: true,
                         message: 'Enjoy your token!',
                         token: token,
-						profile : req.body.profile
+						profile : user.profile
                     });
                 }		
 
@@ -74,6 +74,8 @@ module.exports = function(apiRoutes) {
                     // if everything is good, save to request for use in other routes
                     req.decoded = decoded;
 					req.userProfile = decoded._doc.profile;	
+					console.log(req.userProfile)
+					
                     next();
                 }
             });
@@ -240,12 +242,12 @@ module.exports = function(apiRoutes) {
 	//Add Scripts PUT
 	apiRoutes.put('/projects/:projectId/scripts', function(req, res) {
 		let code = req.params.projectId;
-		let scripts = req.body.scripts
+		let scripts = req.body.scripts;
 		let found = false;
-		if(!Array.isArray(scripts)){
-			scripts=JSON.parse(scripts)	
-		}
-
+		console.log(scripts);
+		// if(!Array.isArray(scripts)){
+		// 	scripts=JSON.parse(scripts)	
+		// }
 		Project.find({
 			code:code
 		},function(err,projects){
@@ -253,7 +255,6 @@ module.exports = function(apiRoutes) {
 				res.json({message:err, success:false});
 			}
 			else if(projects.length>0){
-				console.log(projects)
 				let tempScripts = projects[0].scripts
 				for(script of tempScripts){
 					for(reqScript of scripts){					
@@ -276,16 +277,68 @@ module.exports = function(apiRoutes) {
 						if (err){
 							res.send(err)
 						}else{
-							res.json(projects); // return all projects in JSON format
+							res.json('->'+projects); // return all projects in JSON format
 						}
 					});
 				}
 			}
 			else{
-				res.json({message:'Project not found', success: false})
+				res.json({message:'Project '+ code+' not found', success: false})
 			}
 			
 		});
+	});
+	var updateScripts = function(data,code){
+		var promise = new Promise(function(resolve,reject){
+			for(itr=0;itr<data.length;itr++){
+				Project.update({
+					_id:code,
+					"scripts.name":data[itr].name
+				},{
+					$set:{
+						"scripts.$":data[itr]
+					}
+				},{
+					multi:true,
+					upsert: true
+				},function(err,projects){
+					console.log(err,projects,itr,data.length)
+					if(err){
+						console.log(err);
+						reject({error:err});
+					}else if((itr) == data.length){
+						console.log(projects)
+						if(projects.nModified==1)
+						resolve("Updated Scripts!!");
+						else{
+							reject({error:projects})
+						}
+					}
+				});
+			}
+		});
+		return promise;
+	}
+	//Edit Scripts PUT
+	apiRoutes.put('/projects/:projectId/scriptsNew', function(req, res) {
+		let code = req.params.projectId;
+		let scripts = req.body.scripts;
+		let found = false;
+		// console.log(scripts);
+		// if(!Array.isArray(scripts)){
+		// 	scripts=JSON.parse(scripts)	
+		// }
+		
+		updateScripts(scripts,code).then(function(resolve,rejected){
+			console.log(resolve,rejected)
+			if(rejected){
+				res.json({error:rejected,success:false});
+			}
+			else{
+				
+				res.json(resolve);
+			}
+		})
 	});
 
 
