@@ -38,7 +38,7 @@ module.exports = function(apiRoutes) {
 
                     // if user is found and password is right
                     // create a token
-                    var token = jwt.sign(user, 'ilovescotchyscotch', {
+                    var token = jwt.sign(user, 'yourDaddy', {
                         expiresIn: 86400 // expires in 24 hours
                     });
 					console.log(req.userProfile)
