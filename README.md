@@ -10,7 +10,6 @@ This is a starting point to demonstrate the method of authentication by verifyin
 
 ## Routes:
 
-=======
 GET /api/login
 
 POST /api/createUser
@@ -34,4 +33,3 @@ DELETE /api/projects/:projectId/scripts
 PUT /api/projects/:code/associatedTestCases
 
 DELETE /api/projects/:code/associatedTestCases
->>>>>>> 3201fdc7ab48ff47af15163273518cc0332aee51
