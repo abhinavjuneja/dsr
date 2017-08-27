@@ -16,10 +16,9 @@ const material_1 = require("@angular/material");
 const dialog_1 = require("./dialog");
 require("rxjs/add/operator/map");
 let Auth = class Auth {
-    constructor(http, dialog, dialogLaunch) {
+    constructor(http, dialog) {
         this.http = http;
         this.dialog = dialog;
-        this.dialogLaunch = dialogLaunch;
     }
     login(username, password) {
         return this.http.post('/api/login', { name: username, password: password })
@@ -29,7 +28,14 @@ let Auth = class Auth {
                 localStorage.setItem('token', user.token);
             }
             else {
-                this.dialog.open(dialog_1.DialogLaunch);
+                let a = function () {
+                    console.log('gotcha');
+                };
+                let data = {
+                    "title": 'Invalid Crediantials',
+                    "content": 'Please enter Valid Credentials!'
+                };
+                this.dialog.open(dialog_1.DialogLaunch, { data: data });
                 throw Observable_1.Observable.throw(response);
             }
         });
@@ -37,6 +43,6 @@ let Auth = class Auth {
 };
 Auth = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http, material_1.MdDialog, dialog_1.DialogLaunch])
+    __metadata("design:paramtypes", [http_1.Http, material_1.MdDialog])
 ], Auth);
 exports.Auth = Auth;

@@ -39,7 +39,7 @@ module.exports = function(apiRoutes) {
                     // if user is found and password is right
                     // create a token
                     var token = jwt.sign(user, 'yourDaddy', {
-                        expiresIn: 86400 // expires in 24 hours
+                        expiresIn: 3600 // expires in 24 hours
                     });
 					console.log(req.userProfile)
                     res.json({
@@ -67,7 +67,7 @@ module.exports = function(apiRoutes) {
         if (token) {
 
             // verifies secret and checks exp
-            jwt.verify(token, 'ilovescotchyscotch', function(err, decoded) {			
+            jwt.verify(token, 'yourDaddy', function(err, decoded) {			
                 if (err) {
                     return res.json({ success: false, message: 'Failed to authenticate token.' });		
                 } else {
@@ -149,7 +149,7 @@ module.exports = function(apiRoutes) {
 	});
 	//GET details of project id
 	apiRoutes.get('/projects/:projectId', function(req, res) {
-		console.log(req.params)
+		// console.log(req.params)
 		Project.find({
 			_id:req.params.projectId
 		},function(err,project){
@@ -249,17 +249,19 @@ module.exports = function(apiRoutes) {
 		// 	scripts=JSON.parse(scripts)	
 		// }
 		Project.find({
-			code:code
+			_id:code
 		},function(err,projects){
 			if(err){
 				res.json({message:err, success:false});
 			}
 			else if(projects.length>0){
 				let tempScripts = projects[0].scripts
+				
 				for(script of tempScripts){
-					for(reqScript of scripts){					
+					for(reqScript of scripts){				
 						if(script.name === reqScript.name){
 							found = true;
+							console.log(found,script.name,reqScript.name)
 						}
 					}
 				}
@@ -271,13 +273,13 @@ module.exports = function(apiRoutes) {
 				}
 				else{
 					Project.update({
-						code:code
+						_id:code
 					},{$pushAll:{'scripts':scripts}
 					},function(err, projects) {
 						if (err){
 							res.send(err)
 						}else{
-							res.json('->'+projects); // return all projects in JSON format
+							res.json(projects); // return all projects in JSON format
 						}
 					});
 				}
@@ -288,7 +290,25 @@ module.exports = function(apiRoutes) {
 			
 		});
 	});
+	var getScripts = function(code){
+		console.log(code)
+		var promise = new Promise(function(resolve,reject){
+			Project.find({
+				_id:code
+			},function(err,project){
+				// console.log(project)
+				if(err){
+					reject(err);
+				}else{
+					console.log(project)
+					resolve(project[0].scripts);
+				}
+			})
+		});
+		return promise;
+	}
 	var updateScripts = function(data,code){
+		console.log('sxsxs')
 		var promise = new Promise(function(resolve,reject){
 			for(itr=0;itr<data.length;itr++){
 				Project.update({
@@ -309,7 +329,7 @@ module.exports = function(apiRoutes) {
 					}else if((itr) == data.length){
 						console.log(projects)
 						if(projects.nModified==1)
-						resolve("Updated Scripts!!");
+							resolve("Updated Scripts!!");
 						else{
 							reject({error:projects})
 						}
@@ -330,7 +350,7 @@ module.exports = function(apiRoutes) {
 		// }
 		
 		updateScripts(scripts,code).then(function(resolve,rejected){
-			console.log(resolve,rejected)
+			// console.log(resolve,rejected)
 			if(rejected){
 				res.json({error:rejected,success:false});
 			}
@@ -343,21 +363,22 @@ module.exports = function(apiRoutes) {
 
 
 	// Delete scripts
-	apiRoutes.delete('/projects/:projectId/scripts', function(req, res) {
+	apiRoutes.delete('/projects/:projectId/scripts/:scriptName', function(req, res) {
 		let code = req.params.projectId;
-		let scriptName = req.body.scriptName;
-		let deleteRequest = req.body.deleteRequest;
-		let deleteComment = req.body.deleteComment;
+		let scriptName = req.params.scriptName;
+		// let deleteRequest = req.body.deleteRequest;
+		// let deleteComment = req.body.deleteComment;
 		let found = false;
+		// console.log(req.body)
 		if(req.userProfile=='admin' || req.userProfile=='mofo' || req.userProfile=='approver'){
 			Project.find({
-				code:code
+				_id:code
 			},function(err,projects){
 				if(err){
 					res.json({message:err, success:false});
 				}
 				else if(projects.length>0){
-					console.log(projects[0].scripts)
+					// console.log(projects[0].scripts)
 					let tempScripts = projects[0].scripts
 					for(script of tempScripts){					
 						if(scriptName === script.name){
@@ -372,13 +393,17 @@ module.exports = function(apiRoutes) {
 					}
 					else if(req.userProfile=='admin'||req.userProfile=='approver'){
 						Project.update({
-							code:code
+							_id:code
 						},{$pull:{'scripts':{name:scriptName}}
 						},function(err, projects) {
 							if (err){
 								res.send(err)
 							}else{
-								res.json(projects); // return in JSON format
+								getScripts(code).then(function(data){
+									console.log('->>'+data)
+									res.json(data);
+								});
+								// res.json(projects); // return in JSON format
 							}
 						});
 					}else if(req.userProfile=='mofo'){

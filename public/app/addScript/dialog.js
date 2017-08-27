@@ -14,11 +14,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const material_1 = require("@angular/material");
+const http_1 = require("@angular/http");
 const forms_1 = require("@angular/forms");
-let DialogLaunch = class DialogLaunch {
-    constructor(data, fb) {
+let DialogLaunch1 = class DialogLaunch1 {
+    constructor(data, fb, http) {
         this.data = data;
         this.fb = fb;
+        this.http = http;
         this.scriptData = [];
         this.json = this.json;
         this.scripts = {
@@ -31,18 +33,19 @@ let DialogLaunch = class DialogLaunch {
                 this.fb.group(this.scripts)
             ])
         });
-        console.log(data);
-        this.dataModel = data;
+        // console.log(data)
+        // this.dataModel = data;
     }
-    addRow(dataModel) {
-        let array = dataModel.multiInput;
-        console.log(dataModel);
-        // array.forEach((element:any) => {
-        console.log(this.data);
-        this.data.multiInput.push(dataModel.multiInput[0]);
-        // });
-    }
+    // public addRow(dataModel:any):void{
+    //   let array:any=dataModel.multiInput;
+    //   console.log(dataModel);
+    //   // array.forEach((element:any) => {
+    //     console.log(this.data)
+    //     this.data.multiInput.push(dataModel.multiInput[0]);
+    //   // });
+    // }
     ngOnInit() {
+        // this.setData();
         // scripts.push(this.fb.group({name:'aa'}))
         this.scriptForm.valueChanges.subscribe(data => {
             // this.setData();
@@ -56,13 +59,21 @@ let DialogLaunch = class DialogLaunch {
         console.log('here');
         this.scriptData = this.scriptForm.controls.scripts.value;
     }
+    addScripts(scripts, token) {
+        this.http.put('/api/projects/' + this.data.projectId + '/scripts/?token=' + token, { scripts: scripts })
+            .subscribe((data) => {
+            console.log(data);
+        }, (err) => {
+            console.log(err);
+        });
+    }
 };
-DialogLaunch = __decorate([
+DialogLaunch1 = __decorate([
     core_1.Component({
-        selector: 'material-dialog',
-        templateUrl: './app/services/mater.html'
+        selector: 'material-dialog-another',
+        templateUrl: './app/addScript/mater.html'
     }),
     __param(0, core_1.Inject(material_1.MD_DIALOG_DATA)),
-    __metadata("design:paramtypes", [Object, forms_1.FormBuilder])
-], DialogLaunch);
-exports.DialogLaunch = DialogLaunch;
+    __metadata("design:paramtypes", [Object, forms_1.FormBuilder, http_1.Http])
+], DialogLaunch1);
+exports.DialogLaunch1 = DialogLaunch1;

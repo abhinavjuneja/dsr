@@ -19,9 +19,12 @@ const app_routing_1 = require("./app.routing");
 const dashboard_component_1 = require("./dashboard.component");
 const details_component_1 = require("./details/details.component");
 const login_1 = require("./login");
-const auth_1 = require("./services/auth");
 const dialog_1 = require("./services/dialog");
+const dialog_2 = require("./addScript/dialog");
+const auth_1 = require("./services/auth");
+// import {DialogOverviewExample,DialogOverviewExampleDialog} from './toBeDel/dialog';
 const projects_1 = require("./services/projects");
+require("node_modules/hammerjs/hammer.js");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -30,8 +33,9 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             dashboard_component_1.DashboardComponent,
             details_component_1.Details,
+            login_1.Login,
             dialog_1.DialogLaunch,
-            login_1.Login
+            dialog_2.DialogLaunch1
         ],
         imports: [
             platform_browser_1.BrowserModule,
@@ -47,12 +51,12 @@ AppModule = __decorate([
             app_routing_1.appRoutingProviders,
             http_2.BaseRequestOptions,
             auth_1.Auth,
-            dialog_1.DialogLaunch,
-            projects_1.Projects
+            projects_1.Projects,
         ],
         bootstrap: [app_component_1.AppComponent],
         entryComponents: [
-            dialog_1.DialogLaunch
+            dialog_1.DialogLaunch,
+            dialog_2.DialogLaunch1
         ]
     })
 ], AppModule);

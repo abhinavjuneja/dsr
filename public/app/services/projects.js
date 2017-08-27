@@ -26,11 +26,20 @@ let Projects = class Projects {
     getProject(_id, token) {
         return this.http.get('/api/projects/' + _id + '?token=' + token);
     }
+    delProject(_id, token) {
+        return this.http.delete('/api/projects/' + _id + '?token=' + token);
+    }
+    createProject(code, token) {
+        return this.http.post('/api/projects?token=' + token, code);
+    }
     putScripts(_id, token, scripts) {
         return this.http.put('/api/projects/' + _id + '/scriptsNew' + '?token=' + token, scripts);
     }
     delScript(_id, token, scripts) {
-        return this.http.put('/api/projects/' + _id + '/scriptsNew' + '?token=' + token, scripts);
+        return this.http.delete('/api/projects/' + _id + '/scripts/' + scripts + '?token=' + token);
+    }
+    addScripts(_id, token, scripts) {
+        return this.http.put('/api/projects/' + _id + '/scripts/' + scripts + '?token=' + token, scripts);
     }
 };
 Projects = __decorate([

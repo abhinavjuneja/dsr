@@ -17,9 +17,12 @@ import {DashboardComponent} from './dashboard.component';
 import {Details} from './details/details.component';
 import {Login} from './login';
 
+import { DialogLaunch } from './services/dialog';
+import { DialogLaunch1 } from './addScript/dialog';
 import { Auth } from './services/auth';
-import {DialogLaunch} from './services/dialog';
+// import {DialogOverviewExample,DialogOverviewExampleDialog} from './toBeDel/dialog';
 import {Projects} from './services/projects';
+import 'node_modules/hammerjs/hammer.js';
 
 
 
@@ -28,8 +31,9 @@ import {Projects} from './services/projects';
         AppComponent,
         DashboardComponent,
         Details,
+        Login,
         DialogLaunch,
-        Login
+        DialogLaunch1
     ],
     imports: [
         BrowserModule,
@@ -45,12 +49,12 @@ import {Projects} from './services/projects';
         appRoutingProviders,
         BaseRequestOptions,
         Auth,
-        DialogLaunch,
-        Projects
+        Projects,
     ],
     bootstrap: [AppComponent],
     entryComponents: [
-        DialogLaunch
+        DialogLaunch,
+        DialogLaunch1
     ]
 
 })

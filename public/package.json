@@ -43,6 +43,8 @@
     "zone.js": "^0.8.16"
   },
   "devDependencies": {
+    "@types/angular-material": "^1.1.54",
+    "@types/hammerjs": "^2.0.35",
     "@types/jasmine": "^2.5.35",
     "@types/node": "^8.0.19",
     "@types/protractor": "^4.0.0",

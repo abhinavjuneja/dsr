@@ -1,0 +1,27 @@
+<h1 md-dialog-title>Add Scripts</h1>
+<div ng-if="data.content" md-dialog-content>
+
+<div ng-if="data.multiInput">
+  <div *ngFor="let input of scriptForm.controls['scripts'].value; let ind=index">
+  <md-input-container fxFlex class="login-components">
+      <input type="text" mdInput placeholder="Script name" [(ngModel)]="scriptForm.controls['scripts'].value[ind].name" >
+  </md-input-container>
+  <md-input-container fxFlex class="login-components">
+      <input type="text" mdInput placeholder="Coverage" [(ngModel)]="scriptForm.controls['scripts'].value[ind].numberOfTestCasesCovered" >
+  </md-input-container>
+  <md-input-container fxFlex class="login-components">
+      <input type="text" mdInput placeholder="Complexity" [(ngModel)]="scriptForm.controls['scripts'].value[ind].complexity" >
+  </md-input-container>
+
+  <button md-button md-mini-fab color="primary"><md-icon>close</md-icon></button>
+  </div>
+  
+</div>
+<div>
+    <button md-button (click)="setData()">Add Row</button>  
+</div>
+</div>
+<div md-dialog-actions> 
+  <button md-button md-dialog-close="Add" (click)="addScripts(this.scriptForm.controls.scripts.value,this.data.token)">Add</button>
+  <button md-button md-dialog-close="Option 2">Close</button>
+</div>

@@ -1,5 +1,7 @@
+    <div class="floatButton" ><button md-fab (click)="createAddScriptModel()"><md-icon>add</md-icon></button></div>
     <div  *ngIf="!loading && detailForm"  style="margin-top:50px">
         <div style="margin-top:50px">
+            <!--<dialog></dialog>-->
         <md-card class="tableHeader" style="margin-bottom:0px;border-radius:0px;height:7px">
             <md-card-content>
                 <div class="header" fxFlex="15.74%" >Name</div>
@@ -15,7 +17,7 @@
             </md-card-content>
         </md-card>
         <!--{{detailForm.value|json}}-->
-        <div  >
+        <div>
             <md-card class="tableData" *ngFor="let project of scriptsData |slice:start:end; let i=index; " style="margin-top:0px;border-radius:0px;margin-bottom:0px;height:24px;box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48);">
                 <md-card-content>
                     <!--<div fxFlex>{{project.name}}</div>
@@ -23,10 +25,13 @@
                     <div fxFlex>{{project.complexity}}</div>
                     <div fxFlex>{{project.comment}}</div>
                     <div fxFlex>{{project.deleteComment}}</div>-->
-                    
+<!--                    
                     <md-input-container fxFlex="15.74%" class="tableComponent">
                         <input [mdTooltip]="detailForm.controls.scripts.value[i + start].name" mdInput [(ngModel)]="detailForm.controls.scripts.value[i + start].name" type="text">
-                    </md-input-container >
+                    </md-input-container >-->
+                    <div fxFlex="15.74%" [mdTooltip]="detailForm.controls.scripts.value[i + start].name" class="tableComponent">
+                        {{detailForm.controls.scripts.value[i + start].name}}
+                    </div>
                     <md-input-container class="tableComponent" fxFlex="5%">
                         <input mdTooltip="Cases Covered" mdInput [(ngModel)]="detailForm.controls.scripts.value[i + start].numberOfTestCasesCovered" type="text">
                     </md-input-container >
@@ -51,7 +56,7 @@
                             <input [disabled]="!detailForm.controls.scripts.value[i + start].deleteRequest" [mdTooltip]="detailForm.controls.scripts.value[i + start].deleteComment" mdInput [(ngModel)]="detailForm.controls.scripts.value[i + start].deleteComment" type="text">
                     </md-input-container>
                     <div>
-                        <button (click)="delScript(detailForm.controls.scripts.value[i + start].name)" md-button>Submit</button>
+                        <button (click)="delScript(detailForm.controls.scripts.value[i + start].name,i)" md-button>Delete</button>
                     </div>
                 </md-card-content>
                 

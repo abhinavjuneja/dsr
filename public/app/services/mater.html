@@ -1,0 +1,14 @@
+<h1 md-dialog-title>{{data.title}}</h1>
+<div ng-if="data.content" md-dialog-content>{{data.content}}</div>
+<div ng-if="data.input">
+  <div>
+  <md-input-container fxFlex class="login-components" *ngFor="let i of data.input">
+      <input type="text" mdInput [placeholder]="i.title" [(ngModel)]="i.name" >
+  </md-input-container>
+  </div>
+
+</div>
+<div md-dialog-actions> 
+  <button md-button [md-dialog-close]="b.name" *ngFor="let b of data.button" (click)="b.task(data)">{{b.name}}</button>
+  <button md-button md-dialog-close="Option 2">Close</button>
+</div>

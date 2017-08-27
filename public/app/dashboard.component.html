@@ -5,19 +5,22 @@
         <td>{{project.associatedTestCases.length}}</td>
     </tr>
 </table>-->
+<div class="floatButton" ><button md-fab (click)="createProjectModel()"><md-icon>add</md-icon></button></div>
 <div style="margin-top:50px">
-    <md-card class="tableHeader"  style="margin-bottom:0px;border-radius:0px;height:7px">
+    <md-card class="tableHeader"  style="margin-bottom:0px;border-radius:0px;height:7px;margin-bottom:0px;height:7px;box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48);">
         <md-card-content>
-            <div class="header" fxFlex="33.33%">Project Code</div>
-            <div class="header" fxFlex="33.33%">Total Scripts</div>
-            <div class="header" fxFlex="33.33%">Associated Test Cases</div>
+            <div class="header" fxFlex="32%">Project Code</div>
+            <div class="header" fxFlex="31%">Total Scripts</div>
+            <div class="header" fxFlex="31%">Associated Test Cases</div>
+            <div class="header" fxFlex="5%"></div>
         </md-card-content>
     </md-card>
-    <md-card (click)="getProject(project._id)" class="tableData" *ngFor="let project of data" style="margin-top:0px;border-radius:0px;margin-bottom:0px;height:7px;box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48);">
+    <md-card class="tableData" *ngFor="let project of list" style="margin-top:0px;border-radius:0px;margin-bottom:0px;height:7px;box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48);">
         <md-card-content>
-            <div fxFlex="33.33%">{{project.code}}</div>
-            <div fxFlex="33.33%">{{project.scripts.length}}</div>
-            <div fxFlex="33.33%">{{project.associatedTestCases.length}}</div>
+            <div (click)="getProject(project._id)" fxFlex="32%">{{project.code}}</div>
+            <div (click)="getProject(project._id)" fxFlex="31%">{{project.scripts.length}}</div>
+            <div (click)="getProject(project._id)" fxFlex="31%">{{project.associatedTestCases.length}}</div>
+            <div fxFlex="5%"><md-icon (click)="deleteProject(project._id)">delete</md-icon></div>
         </md-card-content>
     </md-card>
 </div>
